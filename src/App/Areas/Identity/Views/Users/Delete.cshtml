@@ -1,0 +1,28 @@
+﻿@model App.Areas.Identity.ViewModels.UserViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Excluir Usuário";
+}
+
+<h4>@ViewData["Title"] </h4>
+
+<h5>Deseja realmente excluir este usuário?</h5>
+
+<div class="row">
+    <div class="col-md-6">
+        <dl>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
+
+        <div>
+            <form asp-area="Identity" asp-controller="Users" asp-action="DeleteConfirmed">
+                <input type="hidden" asp-for="Id" />
+                <a class="btn btn-info" asp-action="Index">Voltar</a>
+                <input type="submit" value="Excluir" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+</div>

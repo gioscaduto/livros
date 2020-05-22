@@ -1,0 +1,70 @@
+﻿@model App.ViewModels.LivroViewModel
+@using App.Extensions
+
+@{
+    ViewData["Title"] = "Excluir ";
+}
+
+<h4>@ViewData["Title"] </h4>
+
+<h5>Deseja realmente excluir este livro?</h5>
+
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/imagens/@Model.ImagemCapa" alt="@Model.ImagemCapa" style="width: 350px; height: 560px" />
+    </div>
+    <div class="col-md-6">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Titulo)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ISBN)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Editora)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Editora.Nome)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Sinopse)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Sinopse)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Autor)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Autor)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DtPublicacao)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DtPublicacao))
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </dt>
+            <dd>
+                @this.FormataValorBooleano(Model.Ativo)
+            </dd>
+        </dl>
+
+        <div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
+                <input type="submit" value="Excluir" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+</div>

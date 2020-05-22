@@ -1,0 +1,95 @@
+﻿@using X.PagedList.Mvc.Common;
+@using X.PagedList.Mvc.Core;
+
+@model X.PagedList.PagedList<LivroViewModel>
+
+@if (Model != null && Model.Count > 0)
+{
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ISBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Titulo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Editora)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Autor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Ativo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var livro in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/imagens/@livro.ImagemCapa" alt="@livro.ImagemCapa" style="width: 70px; height: 100px" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => livro.ISBN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => livro.Titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => livro.Editora.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => livro.Autor)
+                    </td>
+                    <td>
+                        @this.FormataValorBooleano(livro.Ativo)
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-warning" asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id"><spam class="fa fa-search"></spam> </a>
+                        <a disable-by-role="Admin" class="btn btn-info" asp-controller="Livros" asp-action="Edit" asp-route-id="@livro.Id"><spam class="fa fa-pencil-alt"></spam> </a>
+                        <a disable-by-role="Admin" class="btn btn-danger" asp-controller="Livros" asp-action="Delete" asp-route-id="@livro.Id"><spam class="fa fa-trash"></spam> </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <div style="float: right">
+            Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+        </div>
+
+        @{
+            var pagedListRenderOptions = new PagedListRenderOptions
+            {
+                FunctionToTransformEachPageLink = (liTag, aTag) => { aTag.Attributes.Add("class", "page-link".ToString()); return aTag; },
+                LiElementClasses = new[] { "page-item" },
+                UlElementClasses = new[] { "pagination  justify-content-center" }
+            };
+
+            var pagedListRenderOptionsBase =
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(pagedListRenderOptions,
+            new AjaxOptions
+            {
+                HttpMethod = "GET",
+                UpdateTargetId = "listaLivros"
+            });
+        }
+
+        <div class="justify-content-center">
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), pagedListRenderOptionsBase)
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <span>Não Há Registros</span>
+    </div>
+}

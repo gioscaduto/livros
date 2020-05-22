@@ -1,0 +1,59 @@
+﻿@model App.Areas.Identity.ViewModels.UserViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Novo Usuário";
+
+    bool CheckRole(string role)
+    {
+        if (Model == null || Model.Roles == null) return false;
+
+        return Model.Roles.Contains(role);
+    }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-area="Identity" asp-controller="Users" asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" maxlength="100" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Senha" class="control-label"></label>
+                <input asp-for="Senha" type="password" class="form-control" maxlength="100" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+
+            @if (ViewBag.Roles != null)
+            {
+                <h4>Roles</h4>
+                
+                @foreach (IdentityRole role in ViewBag.Roles)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <div class="col-md-1">
+                                <input type="checkbox" checked="@(CheckRole(role.Name))" class="align-middle" name="roles" value="@role.Name" />
+                            </div>
+                            <label class="col-form-label-sm col-md-4 font-weight-bold">@role.Name</label>
+                        </div>
+                    </div>
+                }
+            }
+
+            <div class="form-group">
+                <a class="btn btn-info" asp-action="Index">Voltar</a>
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

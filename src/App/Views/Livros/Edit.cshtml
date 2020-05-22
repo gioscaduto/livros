@@ -1,0 +1,104 @@
+﻿@model App.ViewModels.LivroViewModel
+
+@{
+    ViewData["Title"] = "Editar Livro";
+}
+
+<h3>@ViewData["Title"] </h3>
+
+@{
+    List<SelectListItem> editoras = new SelectList(Model.Editoras, "Id", "Nome").ToList();
+    editoras.Insert(0, new SelectListItem { Text = "Selecione", Value = "", Selected = true });
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form enctype="multipart/form-data" asp-action="Edit">
+
+            <vc:summary></vc:summary>
+            <div asp-validation-summary="None" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ISBN" class="control-label"></label>
+                <input asp-for="ISBN" class="form-control" />
+                <span asp-validation-for="ISBN" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EditoraId" class="control-label">Editora</label>
+                <select asp-for="EditoraId" class="form-control" asp-items="@editoras">
+                </select>
+
+                <span asp-validation-for="EditoraId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Sinopse" class="control-label"></label>
+                <textarea cols="40" rows="5" asp-for="Sinopse" class="form-control"></textarea>
+                <span asp-validation-for="Sinopse" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Imagem </label><br />
+                <img src="~/imagens/@Model.ImagemCapa" alt="@Model.ImagemCapa" style="width: 70px; height: 100px" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImagemCapaUpload" class="control-label">Imagem de Capa</label>
+
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ImagemUpload" asp-for="ImagemCapaUpload">
+                    <label data-browse="Procurar" style="width: 400px" class="custom-file-label" for="ImagemUpload"></label>
+                    <label style="display: none" id="img_nome"></label>
+                </div>
+
+                <span asp-validation-for="ImagemCapaUpload" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Autor" class="control-label"></label>
+                <input asp-for="Autor" class="form-control" />
+                <span asp-validation-for="Autor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DtPublicacao" class="control-label">Data de Publicação</label>
+                <input asp-for="DtPublicacao" type="text" class="form-control data" />
+                <span asp-validation-for="DtPublicacao" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" checked="checked" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+                </label>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#ImagemUpload").change(function () {
+            $("#img_nome").text(this.files[0].name);
+            $("#img_nome")[0].style.display = 'block';
+        });
+
+        FormatarCampoDateTimePicker();
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@using App.Extensions
+@model App.ViewModels.LivroViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Livro ";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/imagens/@Model.ImagemCapa" alt="@Model.ImagemCapa" style="width: 350px; height: 560px" />
+    </div>
+    <div class="col-md-6">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Titulo)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ISBN)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Editora)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Editora.Nome)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Sinopse)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Sinopse)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Autor)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Autor)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DtPublicacao)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DtPublicacao)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </dt>
+            <dd>
+                @this.FormataValorBooleano(Model.Ativo)
+            </dd>
+        </dl>
+
+        <div>
+            <button class="btn btn-info" onclick="javascript: history.go(-1); return false;">Voltar</button>
+            <a class="btn btn-dark" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@model App.ViewModels.Pesquisa.LivroPesquisaViewModel
+
+@{
+    ViewData["Title"] = "Livros";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<vc:Summary></vc:Summary>
+
+<form>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group row">
+                <label class="col-form-label-sm col-md-4 font-weight-bold">Palavra Chave:</label>
+                <div class="col-md-8">
+                    <input type="text" id="palavraChave" value="@Model.PalavraChave" class="form-control" maxlength="100" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group row">
+                <label class="col-form-label-sm col-md-5 font-weight-bold">Data de Publicação - Inicial:</label>
+                <div class="col-md-7">
+                    <input type="datetime" id="dtPublicacaoInicial" value="@Model.DtPublicacaoInicial" class="form-control data" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group row">
+                <label class="col-form-label-sm col-md-5 font-weight-bold">Data de Publicação - Final</label>
+                <div class="col-md-7">
+                    <input type="datetime" id="dtPublicacaoFinal" value="@Model.DtPublicacaoFinal" class="form-control data" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group row">
+                <label class="col-form-label-sm col-md-4 font-weight-bold">Ordenação:</label>
+                <div class="col-md-8">
+                    <select name="Ordenacao" asp-for="@Model.Ordenacao" id="ordenacao" class="form-control">
+                        <option value="1"> A-Z </option>
+                        <option value="2"> Z-A </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group float-right">
+                <a class="btn btn-info" asp-action="Create" disable-by-role="Admin">Novo Livro</a>
+                <button class="btn btn-primary" type="button" onclick="Filtrar()">Filtrar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="listaLivros">
+    <partial name="_ListaLivros" model="Model.Livros" />
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/livros.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            FormatarCampoDateTimePicker();
+        });
+    </script>
+}

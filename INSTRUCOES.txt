@@ -1,0 +1,22 @@
+Alterar a conexao do banco de dados no arquivo: APPSETTINGS.JSON
+
+Abrir O Package Manager Console,
+
+Selecione o Default Project como App
+
+   Rodar o Comando:  update-database -context ApplicationDbContext
+
+Selecione o Default Project como Data
+
+   Rodar o Comando: update-database -context LivrariaDbContext
+
+Apos isso a aplicacao podera ser inicializada
+
+Usuario Padrao
+
+   E-mail/User Name : admin@admin.com
+   Senha: Teste@123
+
+Role Padrão
+
+   Admin
